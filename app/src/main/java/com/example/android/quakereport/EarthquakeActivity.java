@@ -17,10 +17,11 @@ package com.example.android.quakereport;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
@@ -30,23 +31,45 @@ public class EarthquakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
         // Create a fake list of earthquake locations.
-        ArrayList<String> earthquakes = new ArrayList<>();
-        earthquakes.add("San Francisco");
-        earthquakes.add("London");
-        earthquakes.add("Tokyo");
-        earthquakes.add("Mexico City");
-        earthquakes.add("Moscow");
-        earthquakes.add("Rio de Janeiro");
-        earthquakes.add("Paris");
+        ArrayList<Earthquake> earthquakes = new ArrayList<Earthquake>();
+        earthquakes.add(
+                new Earthquake("7.0","San Francisco",
+                        simpleDateFormat.format(new Date())));
+
+        earthquakes.add(
+                new Earthquake("6.0","London",
+                        simpleDateFormat.format(new Date())));
+
+        earthquakes.add(
+                new Earthquake("9.0","Tokyo",
+                        simpleDateFormat.format(new Date())));
+
+        earthquakes.add(
+                new Earthquake("7.0","Mexico City",
+                        simpleDateFormat.format(new Date())));
+
+        earthquakes.add(
+                new Earthquake("4.0","Moscow",
+                        simpleDateFormat.format(new Date())));
+
+        earthquakes.add(
+                new Earthquake("6.0","Rio de Janeiro",
+                        simpleDateFormat.format(new Date())));
+
+        earthquakes.add(
+                new Earthquake("7.0","Paris",
+                        simpleDateFormat.format(new Date())));
+
 
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
         // Create a new {@link ArrayAdapter} of earthquakes
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, earthquakes);
+        EarthquakeAdapter adapter =
+                new EarthquakeAdapter(this,
+                        R.layout.earthquake_activity, earthquakes);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
