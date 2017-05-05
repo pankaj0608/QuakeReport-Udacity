@@ -1,5 +1,7 @@
 package com.example.android.quakereport;
 
+import java.util.Date;
+
 /**
  * Created by pankaj on 5/4/2017.
  */
@@ -7,9 +9,9 @@ public class Earthquake {
 
     String intensity;
     String location;
-    String time;
+    Date time;
 
-    Earthquake(String aIntensity, String aLocation, String aTime) {
+    Earthquake(String aIntensity, String aLocation, Date aTime) {
 
         this.intensity = aIntensity;
         this.location = aLocation;
@@ -24,7 +26,7 @@ public class Earthquake {
         return location;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 }

@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,36 +30,28 @@ public class EarthquakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
         // Create a fake list of earthquake locations.
         ArrayList<Earthquake> earthquakes = new ArrayList<Earthquake>();
         earthquakes.add(
-                new Earthquake("7.0","San Francisco",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("7.0","San Francisco",new Date()));
 
         earthquakes.add(
-                new Earthquake("6.0","London",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("6.0","London",new Date()));
 
         earthquakes.add(
-                new Earthquake("9.0","Tokyo",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("9.0","Tokyo",new Date()));
 
         earthquakes.add(
-                new Earthquake("7.0","Mexico City",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("7.0","Mexico City",new Date()));
 
         earthquakes.add(
-                new Earthquake("4.0","Moscow",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("4.0","Moscow",new Date()));
 
         earthquakes.add(
-                new Earthquake("6.0","Rio de Janeiro",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("6.0","Rio de Janeiro",new Date()));
 
         earthquakes.add(
-                new Earthquake("7.0","Paris",
-                        simpleDateFormat.format(new Date())));
+                new Earthquake("7.0","Paris",new Date()));
 
 
         // Find a reference to the {@link ListView} in the layout
