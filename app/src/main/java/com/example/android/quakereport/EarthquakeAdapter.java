@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+    private SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("h:m a");
 
     public EarthquakeAdapter(Activity context, int resource, ArrayList<Earthquake> earthquakes) {
         super(context,resource,earthquakes);
@@ -33,15 +35,28 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         Earthquake currentEarthquake = (Earthquake) getItem(position);
 
-        TextView intensityTextView = (TextView) listItemView.findViewById(R.id.earthquake_intensity);
-        intensityTextView.setText(currentEarthquake.getIntensity());
+        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude);
+        magnitudeTextView.setText(
+                formatMagnitude(Double.parseDouble(currentEarthquake.getMagnitude())));
 
-        TextView locationTextView = (TextView) listItemView.findViewById(R.id.earthquake_location);
+        TextView locationTextView = (TextView) listItemView.findViewById(R.id.location);
         locationTextView.setText(currentEarthquake.getLocation());
 
-        TextView timeTextView = (TextView) listItemView.findViewById(R.id.earthquake_time);
-        timeTextView.setText(simpleDateFormat.format(currentEarthquake.getTime()));
+        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
+        dateTextView.setText(simpleDateFormat.format(currentEarthquake.getTime()));
+
+        TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
+        timeTextView.setText(simpleTimeFormat.format(currentEarthquake.getTime()));
 
         return listItemView;
+    }
+
+    /**
+     * Return the formatted magnitude string showing 1 decimal place (i.e. "3.2")
+     * from a decimal magnitude value.
+     */
+    private String formatMagnitude(double magnitude) {
+        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
+        return magnitudeFormat.format(magnitude);
     }
 }

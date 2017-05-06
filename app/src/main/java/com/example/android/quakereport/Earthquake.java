@@ -7,19 +7,19 @@ import java.util.Date;
  */
 public class Earthquake {
 
-    String intensity;
+    String magnitude;
     String location;
     Date time;
 
-    Earthquake(String aIntensity, String aLocation, Date aTime) {
+    Earthquake(String aMagnitude, String aLocation, Date aTime) {
 
-        this.intensity = aIntensity;
+        this.magnitude = aMagnitude;
         this.location = aLocation;
         this.time = aTime;
     }
 
-    public String getIntensity() {
-        return intensity;
+    public String getMagnitude() {
+        return magnitude;
     }
 
     public String getLocation() {
