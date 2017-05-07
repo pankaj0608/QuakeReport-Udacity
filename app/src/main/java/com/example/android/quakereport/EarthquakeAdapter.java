@@ -57,8 +57,15 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
                 substring(0,currentEarthquake.getLocation().indexOf("of") + 2));
 
         TextView primaryLocationTextView = (TextView) listItemView.findViewById(R.id.primary_location);
-        primaryLocationTextView.setText(
-                currentEarthquake.getLocation().substring(12,currentEarthquake.getLocation().length()));
+
+        if(currentEarthquake.getLocation().length() > 12 ) {
+            primaryLocationTextView.setText(
+                    currentEarthquake.getLocation().substring(12,currentEarthquake.getLocation().length()));
+        }
+        else {
+            primaryLocationTextView.setText(
+                    currentEarthquake.getLocation());
+        }
 
 
         TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
