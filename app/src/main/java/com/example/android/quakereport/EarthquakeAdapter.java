@@ -79,6 +79,11 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         return magnitudeFormat.format(magnitude);
     }
 
+    /**
+     * Return the color as an app int
+     * @param magnitude
+     * @return
+     */
     private int getMagnitudeColor(double magnitude) {
         int magnitudeColorResourceId;
         int magnitudeFloor = (int) Math.floor(magnitude);
