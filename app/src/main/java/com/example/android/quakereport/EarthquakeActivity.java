@@ -58,19 +58,21 @@ public class EarthquakeActivity extends AppCompatActivity {
         setContentView(R.layout.earthquake_activity);
 
         // Kick off an {@link AsyncTask} to perform the network request
+
         TsunamiAsyncTask task = new TsunamiAsyncTask();
-        task.execute();
+        task.execute(USGS_REQUEST_URL);
+
     }
 
 
-    private class TsunamiAsyncTask extends AsyncTask<URL, Integer, ArrayList<Earthquake>> {
+    private class TsunamiAsyncTask extends AsyncTask<String, Integer, ArrayList<Earthquake>> {
 
         @Override
-        protected ArrayList<Earthquake> doInBackground(URL... urls) {
+        protected ArrayList<Earthquake> doInBackground(String... urls) {
 
             System.out.println("In doInBackground");
             // Create URL object
-            URL url = createUrl(USGS_REQUEST_URL);
+            URL url = createUrl(urls[0]);
 
             // Perform HTTP request to the URL and receive a JSON response back
             String jsonResponse = "";
@@ -114,19 +116,6 @@ public class EarthquakeActivity extends AppCompatActivity {
 //            super.onProgressUpdate(values);
 //        }
 
-        /**
-         * Returns new URL object from the given string URL.
-         */
-        private URL createUrl(String stringUrl) {
-            URL url = null;
-            try {
-                url = new URL(stringUrl);
-            } catch (MalformedURLException exception) {
-                Log.e(LOG_TAG, "Error with creating URL", exception);
-                return null;
-            }
-            return url;
-        }
 
         /**
          * Make an HTTP request to the given URL and return a String as the response.
@@ -173,6 +162,20 @@ public class EarthquakeActivity extends AppCompatActivity {
                 }
             }
             return output.toString();
+        }
+
+        /**
+         * Returns new URL object from the given string URL.
+         */
+        private URL createUrl(String stringUrl) {
+            URL url = null;
+            try {
+                url = new URL(stringUrl);
+            } catch (MalformedURLException exception) {
+                Log.e(LOG_TAG, "Error with creating URL", exception);
+                return null;
+            }
+            return url;
         }
 
         public ArrayList<Earthquake> extractEarthQuakesFromJson(String jsonResponse) {
@@ -252,5 +255,6 @@ public class EarthquakeActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
