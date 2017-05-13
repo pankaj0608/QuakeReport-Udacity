@@ -48,7 +48,7 @@ public class EarthquakeActivity extends AppCompatActivity {
      */
     private static final String USGS_REQUEST_URL =
               //"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
-                "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-05-02&minfelt=50&minmagnitude=3";
+                "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-01-09&minfelt=50&minmagnitude=3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
