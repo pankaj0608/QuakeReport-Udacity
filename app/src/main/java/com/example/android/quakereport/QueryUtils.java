@@ -67,7 +67,9 @@ public final class QueryUtils {
                         jsonEarthquake.getString("mag"),
                         jsonEarthquake.getString("place"),
                         new Date(Long.parseLong(jsonEarthquake.getString("time"))),
-                        jsonEarthquake.getString("url")
+                        jsonEarthquake.getString("url"),
+                        jsonEarthquake.getString("felt"),
+                        jsonEarthquake.getString("cdi")
                         ));
             }
 

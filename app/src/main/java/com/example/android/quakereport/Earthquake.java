@@ -11,13 +11,19 @@ public class Earthquake {
     String location;
     Date time;
     String url;
+    String numberOfPeople;
+    String perceivedStrength;
 
-    Earthquake(String aMagnitude, String aLocation, Date aTime, String aUrl) {
+    Earthquake(String aMagnitude, String aLocation, Date aTime, String aUrl,
+               String aNumberOfPeople, String aPerceivedStrength) {
 
         this.magnitude = aMagnitude;
         this.location = aLocation;
         this.time = aTime;
         this.url = aUrl;
+        this.numberOfPeople = aNumberOfPeople;
+        this.perceivedStrength = aPerceivedStrength;
+
     }
 
     public String getMagnitude() {
@@ -34,5 +40,13 @@ public class Earthquake {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    public String getPerceivedStrength() {
+        return perceivedStrength;
     }
 }

@@ -47,10 +47,8 @@ public class EarthquakeActivity extends AppCompatActivity {
      * URL to query the USGS dataset for earthquake information
      */
     private static final String USGS_REQUEST_URL =
-            //"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2013-01-01&endtime=2014-01-02&minmagnitude=6";
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
-    // "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2012-01-01&endtime=2012-12-01&minmagnitude=6";
-
+              //"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
+                "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-05-02&minfelt=50&minmagnitude=3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +200,9 @@ public class EarthquakeActivity extends AppCompatActivity {
                             jsonEarthquake.getString("mag"),
                             jsonEarthquake.getString("place"),
                             new Date(Long.parseLong(jsonEarthquake.getString("time"))),
-                            jsonEarthquake.getString("url")
+                            jsonEarthquake.getString("url"),
+                            jsonEarthquake.getString("felt"),
+                            jsonEarthquake.getString("cdi")
                     ));
                 }
 
