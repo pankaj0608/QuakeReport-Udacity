@@ -48,8 +48,8 @@ public class EarthquakeActivity extends AppCompatActivity {
      */
     private static final String USGS_REQUEST_URL =
             //"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2013-01-01&endtime=2014-01-02&minmagnitude=6";
-             "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
-           // "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2012-01-01&endtime=2012-12-01&minmagnitude=6";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
+    // "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2012-01-01&endtime=2012-12-01&minmagnitude=6";
 
 
     @Override
@@ -63,10 +63,12 @@ public class EarthquakeActivity extends AppCompatActivity {
     }
 
 
-    private class TsunamiAsyncTask extends AsyncTask<URL, Void, ArrayList<Earthquake>> {
+    private class TsunamiAsyncTask extends AsyncTask<URL, Integer, ArrayList<Earthquake>> {
 
         @Override
         protected ArrayList<Earthquake> doInBackground(URL... urls) {
+
+            System.out.println("In doInBackground");
             // Create URL object
             URL url = createUrl(USGS_REQUEST_URL);
 
@@ -74,6 +76,7 @@ public class EarthquakeActivity extends AppCompatActivity {
             String jsonResponse = "";
             try {
                 jsonResponse = makeHttpRequest(url);
+//                publishProgress(10);
             } catch (IOException e) {
                 // TODO Handle the IOException
             }
@@ -91,12 +94,25 @@ public class EarthquakeActivity extends AppCompatActivity {
          */
         @Override
         protected void onPostExecute(ArrayList<Earthquake> earthquake) {
+            System.out.println("In onPostExecute");
+
             if (earthquake == null) {
                 return;
             }
 
             updateUi(earthquake);
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            System.out.println("In onPreExecute");
+        }
+
+        //        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            super.onProgressUpdate(values);
+//        }
 
         /**
          * Returns new URL object from the given string URL.
