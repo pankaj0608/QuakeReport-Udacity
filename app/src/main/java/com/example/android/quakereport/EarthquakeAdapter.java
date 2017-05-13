@@ -3,6 +3,7 @@ package com.example.android.quakereport;
 import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("h:m a");
 
     public EarthquakeAdapter(Activity context, int resource, ArrayList<Earthquake> earthquakes) {
-        super(context,resource,earthquakes);
+        super(context, resource, earthquakes);
     }
 
     @Override
@@ -30,49 +31,53 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         //return super.getView(position, convertView, parent);
         View listItemView = convertView;
 
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_item, parent, false);
+        try {
+            if (listItemView == null) {
+                listItemView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.list_item, parent, false);
+            }
+
+            Earthquake currentEarthquake = (Earthquake) getItem(position);
+
+            TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude);
+            magnitudeTextView.setText(
+                    formatMagnitude(Double.parseDouble(currentEarthquake.getMagnitude())));
+
+            // Set the proper background color on the magnitude circle.
+            // Fetch the background from the TextView, which is a GradientDrawable.
+            GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
+
+            // Get the appropriate background color based on the current earthquake magnitude
+            int magnitudeColor = getMagnitudeColor(
+                    Double.parseDouble(currentEarthquake.getMagnitude()));
+
+            // Set the color on the magnitude circle
+            magnitudeCircle.setColor(magnitudeColor);
+
+            TextView locationOffsetTextView = (TextView) listItemView.findViewById(R.id.location_offset);
+            locationOffsetTextView.setText(currentEarthquake.getLocation().
+                    substring(0, currentEarthquake.getLocation().indexOf("of") + 2));
+
+            TextView primaryLocationTextView = (TextView) listItemView.findViewById(R.id.primary_location);
+
+            if (currentEarthquake.getLocation().length() > 12) {
+                primaryLocationTextView.setText(
+                        currentEarthquake.getLocation().substring(12, currentEarthquake.getLocation().length()));
+            } else {
+                primaryLocationTextView.setText(
+                        currentEarthquake.getLocation());
+            }
+
+
+            TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
+            dateTextView.setText(simpleDateFormat.format(currentEarthquake.getTime()));
+
+            TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
+            timeTextView.setText(simpleTimeFormat.format(currentEarthquake.getTime()));
+
+        } catch (Exception e) {
+            Log.e("getView ", e.getMessage());
         }
-
-        Earthquake currentEarthquake = (Earthquake) getItem(position);
-
-        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude);
-        magnitudeTextView.setText(
-                formatMagnitude(Double.parseDouble(currentEarthquake.getMagnitude())));
-
-        // Set the proper background color on the magnitude circle.
-        // Fetch the background from the TextView, which is a GradientDrawable.
-        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
-
-        // Get the appropriate background color based on the current earthquake magnitude
-        int magnitudeColor = getMagnitudeColor(
-                Double.parseDouble(currentEarthquake.getMagnitude()));
-
-        // Set the color on the magnitude circle
-        magnitudeCircle.setColor(magnitudeColor);
-
-        TextView locationOffsetTextView = (TextView) listItemView.findViewById(R.id.location_offset);
-        locationOffsetTextView.setText(currentEarthquake.getLocation().
-                substring(0,currentEarthquake.getLocation().indexOf("of") + 2));
-
-        TextView primaryLocationTextView = (TextView) listItemView.findViewById(R.id.primary_location);
-
-        if(currentEarthquake.getLocation().length() > 12 ) {
-            primaryLocationTextView.setText(
-                    currentEarthquake.getLocation().substring(12,currentEarthquake.getLocation().length()));
-        }
-        else {
-            primaryLocationTextView.setText(
-                    currentEarthquake.getLocation());
-        }
-
-
-        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
-        dateTextView.setText(simpleDateFormat.format(currentEarthquake.getTime()));
-
-        TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
-        timeTextView.setText(simpleTimeFormat.format(currentEarthquake.getTime()));
 
         return listItemView;
     }
@@ -88,6 +93,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
     /**
      * Return the color as an app int
+     *
      * @param magnitude
      * @return
      */
