@@ -15,8 +15,6 @@
  */
 package com.example.android.quakereport;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -240,17 +238,21 @@ public class EarthquakeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // Find the current earthquake that was clicked on
+//                // Find the current earthquake that was clicked on
+//                Earthquake currentEarthquake = adapter.getItem(position);
+//
+//                // Convert the String URL into a URI object (to pass into the Intent constructor)
+//                Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
+//
+//                // Create a new intent to view the earthquake URI
+//                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
+//
+//                // Send the intent to launch a new activity
+//                startActivity(websiteIntent);
+
                 Earthquake currentEarthquake = adapter.getItem(position);
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
-
-                // Create a new intent to view the earthquake URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
-
-                // Send the intent to launch a new activity
-                startActivity(websiteIntent);
+                System.out.println(currentEarthquake);
 
             }
         });

@@ -49,4 +49,16 @@ public class Earthquake {
     public String getPerceivedStrength() {
         return perceivedStrength;
     }
+
+    @Override
+    public String toString() {
+        return "Earthquake{" +
+                "magnitude='" + magnitude + '\'' +
+                ", location='" + location + '\'' +
+                ", time=" + time +
+                ", url='" + url + '\'' +
+                ", numberOfPeople='" + numberOfPeople + '\'' +
+                ", perceivedStrength='" + perceivedStrength + '\'' +
+                '}';
+    }
 }
