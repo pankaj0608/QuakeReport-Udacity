@@ -15,6 +15,7 @@
  */
 package com.example.android.quakereport;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,8 +46,8 @@ public class EarthquakeActivity extends AppCompatActivity {
      * URL to query the USGS dataset for earthquake information
      */
     private static final String USGS_REQUEST_URL =
-              //"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
-                "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-01-09&minfelt=50&minmagnitude=3";
+            //"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-05";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-01-09&minfelt=50&minmagnitude=3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,8 +252,20 @@ public class EarthquakeActivity extends AppCompatActivity {
 //                startActivity(websiteIntent);
 
                 Earthquake currentEarthquake = adapter.getItem(position);
+                String title = currentEarthquake.getLocation();
+                String number_of_people = currentEarthquake.getNumberOfPeople();
+                String perceived_magnitude = currentEarthquake.getPerceivedStrength();
+                Intent intent = new Intent(EarthquakeActivity.this, EarthQuakeFeltActivity.class);
+
+
+                intent.putExtra("title", title);
+                intent.putExtra("number_of_people", number_of_people);
+                intent.putExtra("perceived_magnitude", perceived_magnitude);
 
                 System.out.println(currentEarthquake);
+
+                startActivity(intent);
+
 
             }
         });
