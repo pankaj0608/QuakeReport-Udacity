@@ -32,6 +32,8 @@ public class EarthquakeActivity extends AppCompatActivity
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
+    private static final int EARTHQUAKE_LOADER_ID = 1;
+
     /**
      * URL to query the USGS dataset for earthquake information
      */
@@ -47,6 +49,9 @@ public class EarthquakeActivity extends AppCompatActivity
         // Kick off an {@link AsyncTask} to perform the network request
 //        TsunamiAsyncTask task = new TsunamiAsyncTask();
 //        task.execute(USGS_REQUEST_URL);
+
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
     }
 
 
