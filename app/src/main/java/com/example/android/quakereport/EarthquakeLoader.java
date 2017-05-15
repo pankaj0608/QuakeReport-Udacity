@@ -40,6 +40,13 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
     @Override
     public List<Earthquake> loadInBackground() {
         System.out.println("In loadInBackground");
+
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Create URL object
         URL url = createUrl(this.url);
 

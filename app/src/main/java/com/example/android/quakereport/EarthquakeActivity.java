@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class EarthquakeActivity extends AppCompatActivity
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
     private TextView mEmptyStateTextView;
+    private ProgressBar loadingSpinner;
 
     /**
      * URL to query the USGS dataset for earthquake information
@@ -57,6 +59,9 @@ public class EarthquakeActivity extends AppCompatActivity
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
 
+        loadingSpinner = (ProgressBar) findViewById(R.id.loading_indicator);
+        loadingSpinner.setVisibility(View.INVISIBLE);
+
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
     }
@@ -64,6 +69,8 @@ public class EarthquakeActivity extends AppCompatActivity
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
+        loadingSpinner.setVisibility(ProgressBar.VISIBLE);
+        loadingSpinner.setIndeterminate(true);
         return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
@@ -76,6 +83,7 @@ public class EarthquakeActivity extends AppCompatActivity
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
 
         mEmptyStateTextView.setText(R.string.no_earthquakes);
+        loadingSpinner.setVisibility(ProgressBar.GONE);
 
         updateUi((ArrayList) earthquakes);
     }
