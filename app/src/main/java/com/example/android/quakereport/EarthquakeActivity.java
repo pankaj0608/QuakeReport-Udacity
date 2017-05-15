@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ public class EarthquakeActivity extends AppCompatActivity
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
     private static final int EARTHQUAKE_LOADER_ID = 1;
+
+    private TextView mEmptyStateTextView;
 
     /**
      * URL to query the USGS dataset for earthquake information
@@ -49,6 +52,10 @@ public class EarthquakeActivity extends AppCompatActivity
         // Kick off an {@link AsyncTask} to perform the network request
 //        TsunamiAsyncTask task = new TsunamiAsyncTask();
 //        task.execute(USGS_REQUEST_URL);
+
+        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        earthquakeListView.setEmptyView(mEmptyStateTextView);
 
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
@@ -67,6 +74,8 @@ public class EarthquakeActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
 
         updateUi((ArrayList) earthquakes);
     }
