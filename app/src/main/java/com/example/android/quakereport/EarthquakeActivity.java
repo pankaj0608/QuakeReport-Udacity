@@ -16,8 +16,11 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,7 +40,7 @@ public class EarthquakeActivity extends AppCompatActivity
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
     private TextView mEmptyStateTextView;
-    private ProgressBar loadingSpinner;
+    private ProgressBar loadingIndicator;
 
     /**
      * URL to query the USGS dataset for earthquake information
@@ -59,18 +62,37 @@ public class EarthquakeActivity extends AppCompatActivity
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
 
-        loadingSpinner = (ProgressBar) findViewById(R.id.loading_indicator);
-        loadingSpinner.setVisibility(View.INVISIBLE);
+        loadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.INVISIBLE);
 
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        // If there is a network connection, fetch data
+        if (networkInfo != null && networkInfo.isConnected()) {
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        }
+        else {
+            // Otherwise, display error
+            // First, hide loading indicator so error message will be visible
+            loadingIndicator.setVisibility(View.GONE);
+
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet_connection);
+        }
+
     }
 
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        loadingSpinner.setVisibility(ProgressBar.VISIBLE);
-        loadingSpinner.setIndeterminate(true);
+        loadingIndicator.setVisibility(ProgressBar.VISIBLE);
+        loadingIndicator.setIndeterminate(true);
         return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
@@ -83,7 +105,7 @@ public class EarthquakeActivity extends AppCompatActivity
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
 
         mEmptyStateTextView.setText(R.string.no_earthquakes);
-        loadingSpinner.setVisibility(ProgressBar.GONE);
+        loadingIndicator.setVisibility(ProgressBar.GONE);
 
         updateUi((ArrayList) earthquakes);
     }
