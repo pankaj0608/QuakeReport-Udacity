@@ -19,6 +19,14 @@ public class EarthQuakeFeltActivity extends AppCompatActivity {
         String number_of_people = intent.getStringExtra("number_of_people");
         String perceived_magnitude = intent.getStringExtra("perceived_magnitude");
 
+        if(number_of_people == null || number_of_people.equals("null")) {
+            number_of_people = "0";
+        }
+
+        if(perceived_magnitude == null || perceived_magnitude.equals("null")) {
+            perceived_magnitude = "0";
+        }
+
         // Capture the layout's TextView and set the string as its text
         TextView textTitle = (TextView) findViewById(R.id.title);
         textTitle.setText(title);
@@ -35,7 +43,7 @@ public class EarthQuakeFeltActivity extends AppCompatActivity {
 
         // Get the appropriate background color based on the current earthquake magnitude
         int magnitudeColor = getMagnitudeColor(
-                Double.parseDouble(perceived_magnitude));
+                    Double.parseDouble(perceived_magnitude));
 
         // Set the color on the magnitude circle
         magnitudeCircle.setColor(magnitudeColor);
