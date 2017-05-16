@@ -42,7 +42,7 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
         System.out.println("In loadInBackground");
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(500);
         } catch (Exception e) {
             e.printStackTrace();
         }
